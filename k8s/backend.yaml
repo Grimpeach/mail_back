@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mail-backend
+  template:
+    metadata:
+      labels:
+        app: mail-backend
+    spec:
+      containers:
+        - name: backend
+          image: mail-backend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: mail-config
+            - secretRef:
+                name: mail-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mail-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: mail-backend
+  ports:
+    - port: 8080
+      targetPort: 8080
