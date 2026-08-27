@@ -81,7 +81,7 @@ services:
     networks:
       - mail_network
 
-  # === Системы Мониторинга ===
+  # === Системы Мониторинга и Логов ===
   prometheus:
     image: prom/prometheus:latest
     container_name: mail_prometheus
@@ -101,6 +101,28 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     depends_on:
       - prometheus
+    networks:
+      - mail_network
+
+  loki:
+    image: grafana/loki:2.9.2
+    container_name: mail_loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - mail_network
+
+  promtail:
+    image: grafana/promtail:2.9.2
+    container_name: mail_promtail
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail-config.yml:/etc/promtail/promtail-config.yml:ro
+    command: -config.file=/etc/promtail/promtail-config.yml
+    depends_on:
+      - loki
     networks:
       - mail_network
 
