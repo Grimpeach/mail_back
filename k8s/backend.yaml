@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mail-backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mail-backend
@@ -14,10 +14,13 @@ spec:
     spec:
       containers:
         - name: backend
-          image: mail-backend:latest
-          imagePullPolicy: Never
+          image: grim27/mail-back:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: "-Xmx256m -Xms256m"
           envFrom:
             - configMapRef:
                 name: mail-config

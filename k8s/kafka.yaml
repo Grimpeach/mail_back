@@ -30,12 +30,14 @@ spec:
             - containerPort: 9092
           resources:
             limits:
-              memory: "1Gi"
+              memory: "600Mi"
               cpu: "500m"
             requests:
-              memory: "512Mi"
-              cpu: "250m"
+              memory: "256Mi"
+              cpu: "100m"
           env:
+            - name: KAFKA_HEAP_OPTS
+              value: "-Xmx256m -Xms256m"
             - name: KAFKA_NODE_ID
               value: "1"
             - name: KAFKA_PROCESS_ROLES
