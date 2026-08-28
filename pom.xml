@@ -14,7 +14,7 @@
     <name>social_network</name>
     <description>social_network</description>
     <properties>
-        <java.version>18</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
         <dependency>
