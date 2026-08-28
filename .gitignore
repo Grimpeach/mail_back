@@ -31,3 +31,14 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Terraform local files and states
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Kubeconfigs and credentials
+kubeconfig-aws.yaml
+*.pem
+*.key
