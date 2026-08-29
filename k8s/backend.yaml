@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: grim27/mail-back:74bf6fcb166d4d78420a6e42e6c7f47a7942a3ec
+          image: grim27/mail-back:dfb26b5695c3a47c7bc97ca793a96d7d05a10f88
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
