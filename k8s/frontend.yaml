@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mail-frontend
+  template:
+    metadata:
+      labels:
+        app: mail-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: grim27/mail-front:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mail-frontend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: mail-frontend
+  ports:
+    - port: 80
+      targetPort: 80
