@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Terraform & AWS Secrets
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+kubeconfig-aws.yaml

@@ -24,7 +24,7 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -37,17 +37,21 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
+
     @Bean
     public JwtTokenService jwtTokenService() {
         return new JwtTokenService();
     }
+
     @Bean
     public JwtTokenFilter jwtTokenFilter() {
         return new JwtTokenFilter(jwtTokenService());
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors().and() // ВАЖНО: Включаем CORS на уровне Spring Security
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(new AntPathRequestMatcher("/api/users/register")).permitAll()
@@ -67,10 +71,10 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
-
 }
